@@ -5,7 +5,7 @@ import { Pressable, View } from "react-native";
 import { ThemedText } from "./themed-text";
 import LinearGradientPokemon from "./ui/LinearGradient";
 
-const baseUrlImage = "https://www.serebii.net/pokemongo/pokemon/";
+const baseUrlImage = "https://assets.pokestats.gg/pokemon/compressed/";
 
 export default function CardPokemon({
   pokemon,
@@ -17,7 +17,7 @@ export default function CardPokemon({
   cardWidth: number;
 }) {
   const number = id.padStart(3, "0");
-  const urlImage = `${baseUrlImage + number}.png`;
+  const urlImage = `${baseUrlImage + number}.webp`;
   const imageWidth = cardWidth / 1.5;
   return (
     <View
