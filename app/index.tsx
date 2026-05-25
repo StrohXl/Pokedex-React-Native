@@ -8,36 +8,51 @@ import { Pokemon } from "@/types/pokemon.type";
 import { GetPokemons } from "@/types/pokemons.type";
 import axios, { AxiosResponse } from "axios";
 import { Image } from "expo-image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FlatList, useWindowDimensions } from "react-native";
 
-export const unstable_settings = {
-  anchor: "(tabs)",
-};
+const limit = 20;
 
 export default function RootLayout() {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const { width } = useWindowDimensions();
+  const [offset, setOffset] = useState<number>(0);
+  const [loading, setLoading] = useState(false);
+  const [morePage, setMorePage] = useState(true);
   const paddingHorizontal = 15;
   const columnGap = 15;
   const cardWidth = (width - paddingHorizontal * 2 - columnGap) / 2;
 
-  const getPokemon = async () => {
-    const data = await getData<GetPokemons>({
-      endPoint: "pokemon",
-      limit: 20,
-    });
-    const dataPokemons = data.data.results;
-    const fetchPokemons = dataPokemons.map((pokemon) => axios.get(pokemon.url));
-    const listaCompletaConDatos: AxiosResponse<Pokemon>[] =
-      await Promise.all(fetchPokemons);
-    const pokemonsDetails = listaCompletaConDatos.map((item) => item.data);
-    setPokemons(pokemonsDetails);
+  const getPokemon = async (pageOffset = 0) => {
+    if (loading && !morePage) return;
+    setLoading(true);
+
+    try {
+      const data = await getData<GetPokemons>({
+        endPoint: "pokemon",
+        offset: pageOffset,
+        limit,
+      });
+      const dataPokemons = data.data.results;
+      const fetchPokemons = dataPokemons.map((pokemon) =>
+        axios.get(pokemon.url),
+      );
+      const listaCompletaConDatos: AxiosResponse<Pokemon>[] =
+        await Promise.all(fetchPokemons);
+      setMorePage(Boolean(data.data.next));
+      setOffset((prev) => prev + limit);
+      const pokemonsDetails = listaCompletaConDatos.map((item) => item.data);
+      setPokemons((prev) => [...prev, ...pokemonsDetails]);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  useEffect(() => {
-    getPokemon();
-  }, []);
+  const getMorePokemon = () => {
+    if (!loading && morePage) getPokemon(offset);
+  };
 
   return (
     <ContainerInitial>
@@ -65,16 +80,13 @@ export default function RootLayout() {
             Pokemones
           </ThemedText>
         )}
+        onEndReached={getMorePokemon}
         columnWrapperStyle={{
           gap: columnGap,
           marginBottom: 15,
         }}
-        renderItem={({ item, index }) => (
-          <CardPokemon
-            cardWidth={cardWidth}
-            pokemon={item}
-            id={`${index + 1}`}
-          />
+        renderItem={({ item }) => (
+          <CardPokemon cardWidth={cardWidth} pokemon={item} id={`${item.id}`} />
         )}
       />
     </ContainerInitial>

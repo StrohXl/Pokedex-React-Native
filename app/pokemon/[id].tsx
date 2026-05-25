@@ -8,14 +8,14 @@ import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
 
-const baseUrlImage = "https://www.serebii.net/pokemongo/pokemon/";
+const baseUrlImage = "https://assets.pokestats.gg/pokemon/compressed/";
 const baseUrlSprite = "https://play.pokemonshowdown.com/sprites/xyani/";
 
 export default function PokemonDetail() {
   const { id } = useLocalSearchParams();
   const [pokemon, setPokemon] = useState<Pokemon>();
   const number = `${id}`.padStart(3, "0");
-  const urlImage = `${baseUrlImage + number}.png`;
+  const urlImage = `${baseUrlImage + number}.webp`;
   const urlSprite = `${baseUrlSprite}${pokemon?.name}.gif`;
   const getPokemon = async () => {
     const { data } = await getData<Pokemon>({ endPoint: `pokemon/${id}` });
@@ -58,7 +58,7 @@ export default function PokemonDetail() {
               />
               <Image
                 source={{
-                  uri: urlSprite,
+                  uri: urlImage,
                 }}
                 style={{
                   width: 200,
