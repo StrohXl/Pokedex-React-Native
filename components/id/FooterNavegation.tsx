@@ -70,12 +70,16 @@ export default function FooterNavegation({
               flexDirection: nav.direction === "prev" ? "row" : "row-reverse",
               alignItems: "center",
               justifyContent: "space-between",
+              gap: 10,
             }}
           >
             <IconSymbol
               name={nav.direction === "prev" ? "chevron-left" : "chevron-right"}
               color="#fff"
               size={25}
+              style={{
+                marginInline: -6,
+              }}
             />
             <Image
               source={nav.imageUrl}
@@ -86,7 +90,11 @@ export default function FooterNavegation({
               }}
               contentFit="contain"
             />
-            <View>
+            <View
+              style={{
+                flex: 1,
+              }}
+            >
               <ThemedText
                 type="defaultSemiBold"
                 style={{
@@ -100,6 +108,7 @@ export default function FooterNavegation({
               </ThemedText>
               <ThemedText
                 type="defaultSemiBold"
+                numberOfLines={1}
                 style={{
                   textTransform: "capitalize",
                   fontSize: 12,

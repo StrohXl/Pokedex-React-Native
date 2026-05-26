@@ -6,13 +6,17 @@ import LinearGradientPokemon from "@/components/ui/LinearGradient";
 import { POKEMON_TYPE_COLORS } from "@/constants/types";
 import { getData } from "@/services/getData";
 import { baseUrlImage, baseUrlSound } from "@/services/urlApi";
-import { PokemonSpecies } from "@/types/pokemon-species.type";
+import {
+  PokemonSpecies,
+  PokemonSpeciesVariety,
+} from "@/types/pokemon-species.type";
 import { Pokemon } from "@/types/pokemon.type";
+import axios from "axios";
 import { useAudioPlayer } from "expo-audio";
 import { Image } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { ScrollView, View } from "react-native";
+import { Pressable, ScrollView, View } from "react-native";
 
 export default function PokemonDetail() {
   const [id, setId] = useState(useLocalSearchParams().id);
@@ -22,12 +26,15 @@ export default function PokemonDetail() {
     prev: Pokemon | undefined;
     next: Pokemon | undefined;
     species: PokemonSpecies | undefined;
+    varieties: PokemonSpeciesVariety[] | undefined;
   }>({
     default: undefined,
     prev: undefined,
     next: undefined,
     species: undefined,
+    varieties: [],
   });
+  const [nameDefault, setNameDefault] = useState("");
   const pokemon = dataPokemon.default;
   const description =
     dataPokemon.species?.flavor_text_entries.filter(
@@ -35,7 +42,7 @@ export default function PokemonDetail() {
     ) ?? "";
 
   const number = `${id}`.padStart(3, "0");
-  const urlImage = `${baseUrlImage + number}.webp`;
+  const urlImage = `${baseUrlImage + `${dataPokemon.default?.id}`.padStart(3, "0")}.webp`;
 
   const player = useAudioPlayer(
     `${baseUrlSound}${useLocalSearchParams().id}.ogg`,
@@ -64,19 +71,32 @@ export default function PokemonDetail() {
       const [speciesRes, defaultRes, nextRes, prevRes] =
         await Promise.all(promises);
 
+      const species = speciesRes.data as PokemonSpecies;
+      const varieties = species.varieties;
+
       const fetchs = {
         default: defaultRes.data as Pokemon,
         prev: prevRes ? (prevRes.data as Pokemon) : undefined,
         next: nextRes.data as Pokemon,
         species: speciesRes?.data as PokemonSpecies,
+        varieties,
       };
-
+      setNameDefault(defaultRes.data.name);
       setDataPokemon(fetchs);
       loadSound(idPokemon);
     } catch (error) {
       console.error(error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const getPokemonVariant = async (urlPokemon: string) => {
+    try {
+      const pokemonVariant: Pokemon = (await axios.get(urlPokemon)).data;
+      setDataPokemon((prev) => ({ ...prev, default: pokemonVariant }));
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -111,6 +131,8 @@ export default function PokemonDetail() {
               justifyContent: "flex-start",
               display: "flex",
               alignItems: "center",
+              position: "relative",
+              marginTop: 50,
             }}
           >
             <Image
@@ -121,10 +143,55 @@ export default function PokemonDetail() {
                 position: "absolute",
                 opacity: 0.2,
                 tintColor: "#fff",
-                top: 50,
               }}
               contentFit="contain"
             />
+            <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              style={{
+                marginBottom: 20,
+              }}
+            >
+              {dataPokemon.varieties?.map((item, index) => {
+                const removeName =
+                  index > 0
+                    ? item.pokemon.name.replace(nameDefault ?? "", "")
+                    : item.pokemon.name;
+                return (
+                  <Pressable
+                    key={item.pokemon.name}
+                    onPress={() => getPokemonVariant(item.pokemon.url)}
+                  >
+                    <View
+                      style={{
+                        backgroundColor:
+                          item.pokemon.name === dataPokemon.default?.name
+                            ? "#fff"
+                            : "#c0c0c0",
+                        marginInline: 5,
+                        paddingInline: 5,
+                        paddingVertical: 1,
+                        borderRadius: 4,
+                        minWidth: 60,
+                      }}
+                    >
+                      <ThemedText
+                        style={{
+                          textTransform: "capitalize",
+                          textAlign: "center",
+                          fontSize: 10,
+                          fontWeight: "500",
+                          color: "#000",
+                        }}
+                      >
+                        {removeName.replace("-", " ")}
+                      </ThemedText>
+                    </View>
+                  </Pressable>
+                );
+              })}
+            </ScrollView>
             <Image
               source={{
                 uri: urlImage,
@@ -132,7 +199,6 @@ export default function PokemonDetail() {
               style={{
                 width: 200,
                 height: 200,
-                marginTop: 50,
                 opacity: loading ? 0 : 1,
               }}
               contentFit="contain"
@@ -180,10 +246,12 @@ export default function PokemonDetail() {
               >
                 <ThemedText
                   style={{
+                    fontSize: 14,
                     textTransform: "capitalize",
                     paddingInline: 10,
                     paddingVertical: 3,
                     textAlign: "center",
+                    fontWeight: 500,
                   }}
                 >
                   {type.name}
@@ -207,7 +275,6 @@ export default function PokemonDetail() {
               <ThemedText
                 style={{
                   textAlign: "center",
-                  fontSize: 18,
                   opacity: loading ? 0 : 1,
                 }}
                 type="defaultSemiBold"
@@ -217,7 +284,7 @@ export default function PokemonDetail() {
               <ThemedText
                 style={{
                   textAlign: "center",
-                  fontSize: 14,
+                  fontSize: 12,
                   textTransform: "uppercase",
                   opacity: loading ? 0 : 1,
                 }}
@@ -234,7 +301,6 @@ export default function PokemonDetail() {
               <ThemedText
                 style={{
                   textAlign: "center",
-                  fontSize: 18,
                   opacity: loading ? 0 : 1,
                 }}
                 type="defaultSemiBold"
@@ -244,7 +310,7 @@ export default function PokemonDetail() {
               <ThemedText
                 style={{
                   textAlign: "center",
-                  fontSize: 14,
+                  fontSize: 12,
                   textTransform: "uppercase",
                   opacity: loading ? 0 : 1,
                 }}

@@ -31,10 +31,13 @@ export default function CardPokemon({
             id: pokemon.id,
           },
         }}
+        style={{
+          flex: 1,
+        }}
         asChild
       >
         <Pressable>
-          <LinearGradientPokemon types={pokemon.types}>
+          <LinearGradientPokemon types={pokemon.types} style={{ flex: 1 }}>
             <Image
               style={{
                 width: "80%",
@@ -61,9 +64,8 @@ export default function CardPokemon({
               type="subtitle"
               style={{
                 textAlign: "center",
-                marginTop: "auto",
                 color: "#000",
-
+                width: "100%",
                 textTransform: "capitalize",
               }}
             >
@@ -72,16 +74,10 @@ export default function CardPokemon({
             <ThemedText
               type="defaultSemiBold"
               style={{
-                color: "#222",
                 textTransform: "capitalize",
-                alignSelf: "flex-start",
-                backgroundColor: "#fff",
+                textAlign: "center",
                 borderRadius: 5,
-                paddingInline: 10,
-                paddingTop: 2,
                 marginInline: "auto",
-                marginTop: 15,
-                paddingBottom: 2,
               }}
             >
               {pokemon.name}
