@@ -1,13 +1,13 @@
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import {
-    DarkTheme,
-    DefaultTheme,
-    ThemeProvider,
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
 } from "@react-navigation/native";
 import { Stack } from "expo-router";
 import {
-    SafeAreaProvider,
-    useSafeAreaInsets,
+  SafeAreaProvider,
+  useSafeAreaInsets,
 } from "react-native-safe-area-context";
 
 export const unstable_settings = {

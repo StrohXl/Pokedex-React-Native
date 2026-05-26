@@ -1,11 +1,10 @@
+import { baseUrlImage } from "@/services/urlApi";
 import { Pokemon } from "@/types/pokemon.type";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
 import { Pressable, View } from "react-native";
 import { ThemedText } from "./themed-text";
 import LinearGradientPokemon from "./ui/LinearGradient";
-
-const baseUrlImage = "https://assets.pokestats.gg/pokemon/compressed/";
 
 export default function CardPokemon({
   pokemon,
@@ -56,7 +55,7 @@ export default function CardPokemon({
                 marginInline: "auto",
                 marginBottom: 15,
               }}
-              source={{ uri: urlImage }}
+              source={urlImage}
             />
             <ThemedText
               type="subtitle"

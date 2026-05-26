@@ -8,17 +8,19 @@ export default function LinearGradientPokemon({
   types,
   children,
   style,
+  colorOpacity = "ff",
 }: {
   children: ReactNode;
   types: PokemonTypeSlot[];
   style?: StyleProp<ViewStyle>;
+  colorOpacity?: string;
 }) {
   const typesLength = types.length;
-  const color1 = POKEMON_TYPE_COLORS[types[0].type.name];
+  const color1 = POKEMON_TYPE_COLORS[types[0].type.name] + colorOpacity;
   const color2 =
     typesLength > 1
-      ? POKEMON_TYPE_COLORS[types[1].type.name]
-      : POKEMON_TYPE_COLORS[types[0].type.name];
+      ? POKEMON_TYPE_COLORS[types[1].type.name] + colorOpacity
+      : POKEMON_TYPE_COLORS[types[0].type.name] + colorOpacity;
   return (
     <LinearGradient
       colors={[color1, color2]}

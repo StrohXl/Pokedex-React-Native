@@ -1,5 +1,6 @@
 import axios, { AxiosPromise } from "axios";
 import { baseUrl } from "./urlApi";
+
 export const getData = async <T>({
   params,
   endPoint,

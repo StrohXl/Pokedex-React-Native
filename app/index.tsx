@@ -72,6 +72,7 @@ export default function RootLayout() {
         keyExtractor={(item) => item.name}
         numColumns={2}
         showsVerticalScrollIndicator={false}
+        onEndReachedThreshold={0.8}
         ListHeaderComponent={() => (
           <ThemedText
             type="title"
@@ -85,7 +86,7 @@ export default function RootLayout() {
           gap: columnGap,
           marginBottom: 15,
         }}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <CardPokemon cardWidth={cardWidth} pokemon={item} id={`${item.id}`} />
         )}
       />
