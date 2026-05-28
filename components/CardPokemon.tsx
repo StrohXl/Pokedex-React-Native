@@ -37,7 +37,14 @@ export default function CardPokemon({
         asChild
       >
         <Pressable>
-          <LinearGradientPokemon types={pokemon.types} style={{ flex: 1 }}>
+          <LinearGradientPokemon
+            types={pokemon.types}
+            style={{
+              flex: 1,
+
+              paddingVertical: 20,
+            }}
+          >
             <Image
               style={{
                 width: "80%",

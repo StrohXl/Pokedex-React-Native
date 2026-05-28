@@ -1,20 +1,23 @@
 import { POKEMON_TYPE_COLORS } from "@/constants/types";
-import { PokemonTypeSlot } from "@/types/pokemon.type";
+import getTypes from "@/features/id/utils/getTypes";
+import { Pokemon } from "@/types/pokemon.type";
 import { LinearGradient } from "expo-linear-gradient";
 import { ReactNode } from "react";
 import { StyleProp, ViewStyle } from "react-native";
 
 export default function LinearGradientPokemon({
-  types,
+  pokemon,
   children,
   style,
   colorOpacity = "ff",
 }: {
   children: ReactNode;
-  types: PokemonTypeSlot[];
+  pokemon: Pokemon | undefined;
   style?: StyleProp<ViewStyle>;
   colorOpacity?: string;
 }) {
+  const types = getTypes({ pokemon });
+
   const typesLength = types.length;
   const color1 = POKEMON_TYPE_COLORS[types[0].type.name] + colorOpacity;
   const color2 =
@@ -27,7 +30,6 @@ export default function LinearGradientPokemon({
       style={[
         {
           position: "relative",
-          padding: 15,
           borderRadius: 10,
         },
         style,

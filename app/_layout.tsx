@@ -6,8 +6,7 @@ import {
 } from "@react-navigation/native";
 import { Stack } from "expo-router";
 import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
+  SafeAreaProvider
 } from "react-native-safe-area-context";
 
 export const unstable_settings = {
@@ -16,9 +15,6 @@ export const unstable_settings = {
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-  const insets = useSafeAreaInsets();
-  const paddingHorizontal = 15;
-
   return (
     <SafeAreaProvider
       style={{

@@ -86,7 +86,7 @@ export default function RootLayout() {
           gap: columnGap,
           marginBottom: 15,
         }}
-        renderItem={({ item, index }) => (
+        renderItem={({ item }) => (
           <CardPokemon cardWidth={cardWidth} pokemon={item} id={`${item.id}`} />
         )}
       />

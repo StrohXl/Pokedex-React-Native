@@ -1,9 +1,9 @@
+import { ThemedText } from "@/components/themed-text";
+import { IconSymbol } from "@/components/ui/icon-symbol";
 import { baseUrlImage } from "@/services/urlApi";
 import { Pokemon } from "@/types/pokemon.type";
 import { Image } from "expo-image";
 import { Pressable, StyleProp, View, ViewStyle } from "react-native";
-import { ThemedText } from "../themed-text";
-import { IconSymbol } from "../ui/icon-symbol";
 import ContainerInfo from "./Containerinfo";
 
 export default function FooterNavegation({
