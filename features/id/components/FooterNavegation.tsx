@@ -49,7 +49,10 @@ export default function FooterNavegation({
         style,
         {
           maxWidth: 400,
+          width: "100%",
           flexDirection: "row",
+          justifyContent: "center",
+          marginInline: "auto",
           gap: "4%",
         },
       ]}

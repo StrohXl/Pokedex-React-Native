@@ -38,7 +38,7 @@ export default function CardPokemon({
       >
         <Pressable>
           <LinearGradientPokemon
-            types={pokemon.types}
+            pokemon={pokemon}
             style={{
               flex: 1,
 
