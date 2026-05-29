@@ -8,16 +8,22 @@ import { FlatList } from "react-native";
 export default function TemplateHome({
   pokemon,
   getMorePokemon,
-  cardWidth,
-  columnGap,
+  numColumns,
 }: {
   getMorePokemon: () => void;
   pokemon: Pokemon[];
-  columnGap: number;
-  cardWidth: number;
+  numColumns: number;
 }) {
+  const columnGap = 15;
+
   return (
-    <ContainerInitial>
+    <ContainerInitial
+      style={{
+        flex: 1,
+        height: "100%",
+        paddingInline: 0,
+      }}
+    >
       <Image
         style={{
           width: 300,
@@ -32,14 +38,17 @@ export default function TemplateHome({
       <FlatList
         data={pokemon}
         keyExtractor={(item) => item.name}
-        numColumns={2}
+        numColumns={numColumns}
         onEndReachedThreshold={0.8}
+        style={{
+          paddingInline: 15,
+        }}
         ListHeaderComponent={() => (
           <ThemedText
             type="title"
             style={{ paddingTop: 15, paddingBottom: 30 }}
           >
-            Pokémon
+            Pokedex
           </ThemedText>
         )}
         onEndReached={getMorePokemon}
@@ -48,7 +57,7 @@ export default function TemplateHome({
           marginBottom: 15,
         }}
         renderItem={({ item }) => (
-          <CardPokemon cardWidth={cardWidth} pokemon={item} id={`${item.id}`} />
+          <CardPokemon pokemon={item} id={`${item.id}`} />
         )}
       />
     </ContainerInitial>

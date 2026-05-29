@@ -13,11 +13,6 @@ export default function RootLayout() {
   const [loading, setLoading] = useState(false);
   const [morePage, setMorePage] = useState(true);
 
-  const { width } = useWindowDimensions();
-  const paddingHorizontal = 15;
-  const columnGap = 15;
-  const cardWidth = (width - paddingHorizontal * 2 - columnGap) / 2;
-
   const states = {
     pokemon,
     setPokemon,
@@ -33,10 +28,18 @@ export default function RootLayout() {
     if (!loading && morePage) getPokemon({ limit, pageOffset: offset, states });
   };
 
+  const { width } = useWindowDimensions();
+  const breackpoints = (): number => {
+    if (width >= 600) {
+      return 5;
+    }
+    return 2;
+  };
+  const numColumns = breackpoints();
+
   return (
     <TemplateHome
-      cardWidth={cardWidth}
-      columnGap={columnGap}
+      numColumns={numColumns}
       getMorePokemon={getMorePokemon}
       pokemon={pokemon}
     />

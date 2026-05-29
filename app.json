@@ -21,7 +21,7 @@
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/images/rotom.png"
+      "favicon": "./assets/images/rotom-pokedex-circle.png"
     },
     "plugins": [
       "expo-router",

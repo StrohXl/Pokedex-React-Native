@@ -32,11 +32,12 @@ export default function TemplateId({
     <LinearGradientPokemon
       style={{
         flex: 1,
+        height: "100%",
       }}
       colorOpacity="50"
       pokemon={pokemonData.default}
     >
-      <ContainerInitial style={{ paddingInline: 0 }}>
+      <ContainerInitial style={{ paddingInline: 0, height: "100%", flex: 1 }}>
         <ScrollView
           style={{
             paddingInline: 15,

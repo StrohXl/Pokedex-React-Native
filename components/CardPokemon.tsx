@@ -9,21 +9,14 @@ import LinearGradientPokemon from "./ui/LinearGradient";
 export default function CardPokemon({
   pokemon,
   id,
-  cardWidth,
 }: {
   pokemon: Pokemon;
   id: string;
-  cardWidth: number;
 }) {
   const number = id.padStart(3, "0");
   const urlImage = `${baseUrlImage + number}.webp`;
-  const imageWidth = cardWidth / 1.5;
   return (
-    <View
-      style={{
-        width: cardWidth,
-      }}
-    >
+    <View style={{ flex: 1 }}>
       <Link
         href={{
           pathname: `/pokemon/[id]`,
@@ -59,7 +52,7 @@ export default function CardPokemon({
             />
             <Image
               style={{
-                width: imageWidth,
+                width: "80%",
                 aspectRatio: 1,
                 objectFit: "contain",
                 marginInline: "auto",
