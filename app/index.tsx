@@ -29,13 +29,13 @@ export default function RootLayout() {
   };
 
   const { width } = useWindowDimensions();
-  const breackpoints = (): number => {
-    if (width >= 600) {
+  const breakpoints = (): number => {
+    if (width >= 768) {
       return 5;
     }
     return 2;
   };
-  const numColumns = breackpoints();
+  const numColumns = breakpoints();
 
   return (
     <TemplateHome

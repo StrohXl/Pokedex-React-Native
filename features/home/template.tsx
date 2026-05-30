@@ -36,6 +36,7 @@ export default function TemplateHome({
       />
 
       <FlatList
+        key={numColumns}
         data={pokemon}
         keyExtractor={(item) => item.name}
         numColumns={numColumns}
