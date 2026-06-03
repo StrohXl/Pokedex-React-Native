@@ -34,6 +34,7 @@ export default function ShowPokemonType({
           <ThemedText
             style={{
               fontSize: 14,
+              color: "#fff",
               textTransform: "capitalize",
               paddingInline: 10,
               paddingVertical: 3,

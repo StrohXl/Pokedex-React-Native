@@ -5,9 +5,7 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { Stack } from "expo-router";
-import {
-  SafeAreaProvider
-} from "react-native-safe-area-context";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export const unstable_settings = {
   anchor: "(tabs)",
@@ -18,7 +16,7 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider
       style={{
-        backgroundColor: colorScheme === "dark" ? "#151718" : "#fff",
+        backgroundColor: colorScheme === "dark" ? "#151718" : "#ddd",
       }}
     >
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
@@ -26,7 +24,7 @@ export default function RootLayout() {
           screenOptions={{
             headerShown: false,
             contentStyle: {
-              backgroundColor: colorScheme === "dark" ? "#151718" : "#fff",
+              backgroundColor: colorScheme === "dark" ? "#151718" : "#ddd",
             },
           }}
         >

@@ -25,14 +25,16 @@ export default function TableInfo({
             flex: 1,
           }}
         >
-          <ThemedText type="defaultSemiBold">Pokédex №</ThemedText>
+          <ThemedText style={{ color: "#fff" }} type="defaultSemiBold">
+            Pokédex №
+          </ThemedText>
         </View>
         <View
           style={{
             flex: 1,
           }}
         >
-          <ThemedText>{id}</ThemedText>
+          <ThemedText style={{ color: "#fff" }}>{id}</ThemedText>
         </View>
       </View>
       <View
@@ -49,7 +51,9 @@ export default function TableInfo({
             flex: 1,
           }}
         >
-          <ThemedText type="defaultSemiBold">Introduced</ThemedText>
+          <ThemedText style={{ color: "#fff" }} type="defaultSemiBold">
+            Introduced
+          </ThemedText>
         </View>
         <View
           style={{
@@ -59,12 +63,14 @@ export default function TableInfo({
           <ThemedText
             style={{
               textTransform: "capitalize",
+              color: "#fff",
             }}
           >
             {pokemonData.species?.generation.name.split("-")[0]}
             <Text
               style={{
                 textTransform: "uppercase",
+                color: "#fff",
               }}
             >
               {` ${pokemonData.species?.generation.name.split("-")[1]}`}
@@ -86,7 +92,9 @@ export default function TableInfo({
             flex: 1,
           }}
         >
-          <ThemedText type="defaultSemiBold">Category</ThemedText>
+          <ThemedText style={{ color: "#fff" }} type="defaultSemiBold">
+            Category
+          </ThemedText>
         </View>
         <View
           style={{
@@ -96,6 +104,7 @@ export default function TableInfo({
           <ThemedText
             style={{
               textTransform: "capitalize",
+              color: "#fff",
             }}
           >
             {
@@ -117,7 +126,9 @@ export default function TableInfo({
             flex: 1,
           }}
         >
-          <ThemedText type="defaultSemiBold">Abilities</ThemedText>
+          <ThemedText style={{ color: "#fff" }} type="defaultSemiBold">
+            Abilities
+          </ThemedText>
         </View>
         <View
           style={{
@@ -129,6 +140,7 @@ export default function TableInfo({
               key={item.ability.name}
               style={{
                 textTransform: "capitalize",
+                color: "#fff",
               }}
             >
               {index + 1}. {item.ability.name}

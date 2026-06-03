@@ -8,7 +8,9 @@ export default function ShowVarieties({
   pokemon,
   getPokemonVariant,
   nameDefault,
+  loading,
 }: {
+  loading: boolean;
   nameDefault: string;
   varieties: PokemonSpeciesVariety[] | undefined;
   pokemon: Pokemon | undefined;
@@ -23,7 +25,8 @@ export default function ShowVarieties({
         minHeight: 26,
       }}
     >
-      {varieties &&
+      {!loading &&
+        varieties &&
         varieties.length > 1 &&
         varieties.map((item, index) => {
           const removeName =

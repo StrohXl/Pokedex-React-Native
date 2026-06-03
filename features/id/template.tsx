@@ -40,6 +40,7 @@ export default function TemplateId({
         paddingInline: 0,
         height: "100%",
         flex: 1,
+        backgroundColor: "",
       }}
     >
       <ScrollView
@@ -53,107 +54,127 @@ export default function TemplateId({
             paddingInline: 15,
             minHeight: height,
           }}
-          colorOpacity="50"
+          opacity={0.5}
           pokemon={pokemonData.default}
         >
-          <View
-            style={{
-              justifyContent: "flex-start",
-              alignItems: "center",
-              position: "relative",
-              marginTop: 25,
-            }}
-          >
-            <Image
-              source={require("@/assets/images/pokemon/pngwing.com.png")}
-              style={{
-                width: 250,
-                aspectRatio: 1,
-                position: "absolute",
-                tintColor: "#fff",
-                opacity: loading ? 0 : 0.2,
-                top: 26,
-              }}
-              contentFit="contain"
-            />
-            <ShowVarieties
-              getPokemonVariant={(value) =>
-                getPokemonVarieties({ states, urlPokemon: value })
-              }
-              nameDefault={nameDefault}
-              pokemon={pokemonData.default}
-              varieties={pokemonData.varieties}
-            />
+          {loading ? (
             <View
               style={{
-                width: 200,
-                height: 200,
+                flex: 1,
                 justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              {loading ? (
-                <ActivityIndicator size={100} color="#ffffff75" />
-              ) : (
+              <ActivityIndicator size={100} color="#ffffff75" />
+            </View>
+          ) : (
+            <View>
+              <View
+                style={{
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  position: "relative",
+                  marginTop: 25,
+                }}
+              >
                 <Image
-                  source={{
-                    uri: urlImage,
-                  }}
+                  source={require("@/assets/images/pokemon/pngwing.com.png")}
                   style={{
-                    width: 200,
-                    height: 200,
+                    width: 250,
+                    aspectRatio: 1,
+                    position: "absolute",
+                    tintColor: "#fff",
+                    opacity: loading ? 0 : 0.2,
+                    top: 26,
                   }}
                   contentFit="contain"
                 />
-              )}
+                <ShowVarieties
+                  loading={loading}
+                  getPokemonVariant={(value) =>
+                    getPokemonVarieties({ states, urlPokemon: value })
+                  }
+                  nameDefault={nameDefault}
+                  pokemon={pokemonData.default}
+                  varieties={pokemonData.varieties}
+                />
+                <View
+                  style={{
+                    width: 200,
+                    height: 200,
+                    justifyContent: "center",
+                  }}
+                >
+                  {!loading && (
+                    <Image
+                      source={{
+                        uri: urlImage,
+                      }}
+                      style={{
+                        width: 200,
+                        height: 200,
+                      }}
+                      contentFit="contain"
+                    />
+                  )}
+                </View>
+              </View>
+              <ThemedText
+                style={{
+                  textAlign: "center",
+                  marginTop: 15,
+                  textTransform: "capitalize",
+                  opacity: loading ? 0 : 1,
+                  color: "#fff",
+                }}
+                type="subtitle"
+              >
+                #{number}
+              </ThemedText>
+              <ThemedText
+                style={{
+                  textAlign: "center",
+                  textTransform: "capitalize",
+                  color: "#fff",
+                }}
+                type="subtitle"
+              >
+                {!loading && pokemonData.default && pokemonData.default.name}
+              </ThemedText>
+              <ShowPokemonType
+                loading={loading}
+                pokemon={pokemonData.default}
+              />
+              <View
+                style={{
+                  maxWidth: 600,
+                  width: "100%",
+                  marginInline: "auto",
+                  display: loading ? "none" : "flex",
+                }}
+              >
+                <FooterNavegation
+                  style={{
+                    marginTop: 20,
+                  }}
+                  id={`${id}`}
+                  updatePokemon={(value) => {
+                    getPokemon({
+                      idPokemon: value,
+                      states,
+                      player,
+                    });
+                  }}
+                  prev={pokemonData.prev}
+                  next={pokemonData.next}
+                />
+                <ThemedText style={{ marginTop: 20, color: "#fff" }}>
+                  {description}
+                </ThemedText>
+                <TableInfo id={Number(id)} pokemonData={pokemonData} />
+              </View>
             </View>
-          </View>
-          <ThemedText
-            style={{
-              textAlign: "center",
-              marginTop: 15,
-              textTransform: "capitalize",
-              opacity: loading ? 0 : 1,
-            }}
-            type="subtitle"
-          >
-            #{number}
-          </ThemedText>
-          <ThemedText
-            style={{
-              textAlign: "center",
-              textTransform: "capitalize",
-            }}
-            type="subtitle"
-          >
-            {!loading && pokemonData.default && pokemonData.default.name}
-          </ThemedText>
-          <ShowPokemonType loading={loading} pokemon={pokemonData.default} />
-          <View
-            style={{
-              maxWidth: 600,
-              width: "100%",
-              marginInline: "auto",
-              display: loading ? "none" : "flex",
-            }}
-          >
-            <FooterNavegation
-              style={{
-                marginTop: 20,
-              }}
-              id={`${id}`}
-              updatePokemon={(value) => {
-                getPokemon({
-                  idPokemon: value,
-                  states,
-                  player,
-                });
-              }}
-              prev={pokemonData.prev}
-              next={pokemonData.next}
-            />
-            <ThemedText style={{ marginTop: 20 }}>{description}</ThemedText>
-            <TableInfo id={Number(id)} pokemonData={pokemonData} />
-          </View>
+          )}
         </LinearGradientPokemon>
       </ScrollView>
     </ContainerInitial>
