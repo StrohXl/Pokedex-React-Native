@@ -1,6 +1,7 @@
 import CardPokemon from "@/components/CardPokemon";
 import ContainerInitial from "@/components/ContainerInitial";
 import { ThemedText } from "@/components/themed-text";
+import { useColorScheme } from "@/hooks/use-color-scheme.web";
 import { Pokemon } from "@/types/pokemon.type";
 import { Image } from "expo-image";
 import { FlatList } from "react-native";
@@ -15,6 +16,7 @@ export default function TemplateHome({
   numColumns: number;
 }) {
   const columnGap = 15;
+  const colorScheme = useColorScheme();
 
   return (
     <ContainerInitial
@@ -24,17 +26,6 @@ export default function TemplateHome({
         paddingInline: 0,
       }}
     >
-      <Image
-        style={{
-          width: 300,
-          height: 300,
-          position: "absolute",
-          top: -30,
-          right: -120,
-        }}
-        source={require("@/assets/images/pokemon/pngwing.com.png")}
-      />
-
       <FlatList
         key={numColumns}
         data={pokemon}
@@ -43,14 +34,27 @@ export default function TemplateHome({
         onEndReachedThreshold={0.8}
         style={{
           paddingInline: 15,
+          backgroundColor: colorScheme === "dark" ? "#151718" : "#fff",
         }}
         ListHeaderComponent={() => (
-          <ThemedText
-            type="title"
-            style={{ paddingTop: 15, paddingBottom: 30 }}
-          >
-            Pokedex
-          </ThemedText>
+          <>
+            <ThemedText
+              type="title"
+              style={{ paddingTop: 15, paddingBottom: 30 }}
+            >
+              Pokedex
+            </ThemedText>
+            <Image
+              style={{
+                width: 300,
+                height: 300,
+                position: "absolute",
+                top: -30,
+                right: -120,
+              }}
+              source={require("@/assets/images/pokemon/pngwing.com.png")}
+            />
+          </>
         )}
         onEndReached={getMorePokemon}
         columnWrapperStyle={{

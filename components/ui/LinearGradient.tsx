@@ -11,7 +11,7 @@ export default function LinearGradientPokemon({
   style,
   colorOpacity = "ff",
 }: {
-  children: ReactNode;
+  children?: ReactNode;
   pokemon: Pokemon | undefined;
   style?: StyleProp<ViewStyle>;
   colorOpacity?: string;

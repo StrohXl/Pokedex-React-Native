@@ -3,7 +3,12 @@ import { ThemedText } from "@/components/themed-text";
 import LinearGradientPokemon from "@/components/ui/LinearGradient";
 import { AudioPlayer } from "expo-audio";
 import { Image } from "expo-image";
-import { ActivityIndicator, ScrollView, View } from "react-native";
+import {
+  ActivityIndicator,
+  ScrollView,
+  useWindowDimensions,
+  View,
+} from "react-native";
 import FooterNavegation from "../id/components/FooterNavegation";
 import ShowPokemonType from "../id/components/ShowPokemonType";
 import ShowVarieties from "../id/components/ShowVarieties";
@@ -21,27 +26,35 @@ export default function TemplateId({
 }) {
   const {
     description,
-    id,
     loading,
+    id,
     nameDefault,
     number,
     pokemonData,
     urlImage,
   } = states;
+  const { height } = useWindowDimensions();
   return (
-    <LinearGradientPokemon
+    <ContainerInitial
       style={{
-        flex: 1,
+        paddingInline: 0,
         height: "100%",
+        flex: 1,
       }}
-      colorOpacity="50"
-      pokemon={pokemonData.default}
     >
-      <ContainerInitial style={{ paddingInline: 0, height: "100%", flex: 1 }}>
-        <ScrollView
+      <ScrollView
+        style={{
+          flex: 1,
+        }}
+      >
+        <LinearGradientPokemon
           style={{
+            borderRadius: 0,
             paddingInline: 15,
+            minHeight: height,
           }}
+          colorOpacity="50"
+          pokemon={pokemonData.default}
         >
           <View
             style={{
@@ -141,8 +154,8 @@ export default function TemplateId({
             <ThemedText style={{ marginTop: 20 }}>{description}</ThemedText>
             <TableInfo id={Number(id)} pokemonData={pokemonData} />
           </View>
-        </ScrollView>
-      </ContainerInitial>
-    </LinearGradientPokemon>
+        </LinearGradientPokemon>
+      </ScrollView>
+    </ContainerInitial>
   );
 }
